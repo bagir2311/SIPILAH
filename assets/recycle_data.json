@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "title": "Botol Plastik (PET)",
+    "category": "Plastik",
+    "difficulty": "Mudah",
+    "image_url": "assets/images/botol_pet.png",
+    "description": "Botol air mineral transparan. Nilai jual tinggi jika bersih.",
+    "steps": [
+      "Lepaskan label plastik pada botol.",
+      "Remukkan botol agar hemat tempat.",
+      "Jangan masukan cairan sisa ke dalam tempat sampah."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Kardus Bekas",
+    "category": "Kertas",
+    "difficulty": "Sedang",
+    "image_url": "assets/images/kardus.png",
+    "description": "Kardus mie instan atau paket belanja online.",
+    "steps": [
+      "Lepaskan semua selotip plastik yang menempel.",
+      "Lipat kardus menjadi pipih (flat).",
+      "Jaga agar tetap kering, jangan kena air."
+    ]
+  }
+]
