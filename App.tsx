@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-// INI YANG BARU: Pake library khusus agar tidak warning
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
-import ScannerScreen from './ScannerScreen';
-import EncyclopediaScreen from './EncyclopediaScreen';
+// 👇 PERBAIKAN UTAMA DI SINI 👇
+// Kita hapus import ScannerScreen yang bikin error
+// Kita pakai EncyclopediaScreen.tsx yang Anda punya
+import EncyclopediaScreen from './EncyclopediaScreen'; 
+import HistoryScreen from './HistoryScreen';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('scanner');
-
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.content}>
-          {activeTab === 'scanner' ? <ScannerScreen /> : <EncyclopediaScreen />}
-        </View>
+    <NavigationContainer>
+      <StatusBar style="dark" />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarActiveTintColor: '#2e7d32', // Warna Hijau
+          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: { paddingBottom: 5, height: 60 },
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName: any;
 
-        <View style={styles.bottomBar}>
-          <TouchableOpacity style={styles.tabButton} onPress={() => setActiveTab('scanner')}>
-            <Text style={{fontSize: 24}}>📷</Text>
-            <Text style={[styles.tabText, { color: activeTab === 'scanner' ? '#2e7d32' : '#999' }]}>Scan</Text>
-          </TouchableOpacity>
+            if (route.name === 'Scan Sampah') {
+              iconName = focused ? 'camera' : 'camera-outline';
+            } else if (route.name === 'Riwayat') {
+              iconName = focused ? 'time' : 'time-outline';
+            }
 
-          <TouchableOpacity style={styles.tabButton} onPress={() => setActiveTab('guide')}>
-            <Text style={{fontSize: 24}}>📖</Text>
-            <Text style={[styles.tabText, { color: activeTab === 'guide' ? '#2e7d32' : '#999' }]}>Panduan</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+      >
+        {/* Tab 1: Arahkan ke EncyclopediaScreen */}
+        <Tab.Screen name="Scan Sampah" component={EncyclopediaScreen} />
+        
+        {/* Tab 2: Arahkan ke HistoryScreen */}
+        <Tab.Screen name="Riwayat" component={HistoryScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  content: { flex: 1 },
-  bottomBar: { flexDirection: 'row', height: 70, backgroundColor: 'white', borderTopWidth: 1, borderTopColor: '#eee', justifyContent: 'space-around', alignItems: 'center', paddingBottom: 10 },
-  tabButton: { alignItems: 'center', justifyContent: 'center', padding: 10 },
-  tabText: { fontSize: 12, marginTop: 4, fontWeight: 'bold' }
-});
