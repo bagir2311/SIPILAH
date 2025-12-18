@@ -1,8 +1,10 @@
-// 1. Import fungsi wajib dari Firebase
+// firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // <-- Kita butuh ini (Database)
+import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// 2. Konfigurasi Rahasia Kamu (Sudah benar)
+// --- INI CONFIG BARU KAMU ---
 const firebaseConfig = {
   apiKey: "AIzaSyDh1w1u72ZeCvmyraBuyti3vKFZqXhARR4",
   authDomain: "sipilah2.firebaseapp.com",
@@ -13,8 +15,20 @@ const firebaseConfig = {
   measurementId: "G-9NEF82LJMH"
 };
 
-// 3. Nyalakan Firebase
+// Inisialisasi Aplikasi
 const app = initializeApp(firebaseConfig);
 
-// 4. Siapkan Database agar bisa dipakai di ScannerScreen & HistoryScreen
-export const db = getFirestore(app);
+// Inisialisasi Auth dengan Pencegah Logout (Persistence)
+let auth;
+try {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  });
+} catch (e) {
+  auth = getAuth(app);
+}
+
+// Inisialisasi Database
+const db = getFirestore(app);
+
+export { app, auth, db };
