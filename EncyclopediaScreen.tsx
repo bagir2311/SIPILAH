@@ -9,7 +9,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
 // API KEY GEMINI
-const API_KEY = "AIzaSyBrqLn6hVgpWIRTfA50P7NbEocdDE2sKCk"; 
+const API_KEY = "AIzaSyAjoFMQP8_uk_BVL3FxfGXYz9KHmrZzkqY"; 
 
 export default function EncyclopediaScreen() {
   const [image, setImage] = useState<string | null>(null);
